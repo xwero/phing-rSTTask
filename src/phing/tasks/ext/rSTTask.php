@@ -1,7 +1,7 @@
 <?php
 require_once "phing/Task.php";
 
-class rSTtask extends Task
+class rSTTask extends Task
 {
     /**
      * @var string Taskname for logger
@@ -50,8 +50,11 @@ class rSTtask extends Task
     /**
      * The main entry point method.
      */
-    public function main() {
-        print($this->file, $this->target, $this->format);
+    public function main()
+    {
+        echo $this->file;
+        echo $this->target;
+        echo $this->format;
     }
 }
 ?>

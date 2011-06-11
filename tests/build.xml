@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="test" basedir="." default="test.single.all">
   <includepath classpath="../src/" />
-  <taskdef name="rST" classname="phing.tasks.ext.rSTtask" />
+  <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
 
   <target name="test.single.all"
           depends="test.single-file, test.single-file-format,

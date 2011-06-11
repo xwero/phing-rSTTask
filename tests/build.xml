@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="test" basedir="." default="test.single.all">
+  <includepath classpath="../src/" />
+  <taskdef name="rST" classname="phing.tasks.ext.rSTtask" />
+
+  <target name="test.single.all"
+          depends="test.single-file, test.single-file-format,
+                   test.single-file-format-target"
+          />
+
+  <target name="test.single-file"
+          description="render a single rST file. Only the file attribute is set"
+  >
+    <rST file="../README" />
+  </target>
+
+  <target name="test.single-file-format"
+          description="render a single rST file. file+format attributes are set"
+  >
+    <rST format="man" file="../README" />
+  </target>
+
+  <target name="test.single-file-format-target"
+          description="render a single rST file, file+format+target attributes"
+  >
+    <rST format="html" file="../README" target="README.html" />
+  </target>
+</project>

@@ -21,9 +21,24 @@ class rSTTask extends Task
      *
      * @var array
      * @see $format
+     * @see $targetExt
      */
     protected static $supportedFormats = array(
         'html', 'latex', 'man', 'odt', 's5', 'xml'
+    );
+
+    /**
+     * Maps formats to file extensions
+     *
+     * @var array
+     */
+    protected static $targetExt = array(
+        'html'  => 'html',
+        'latex' => 'tex',
+        'man'   => '3',
+        'odt'   => 'odt',
+        's5'    => 'html',
+        'xml'   => 'xml',
     );
 
     /**
@@ -83,21 +98,53 @@ class rSTTask extends Task
         $this->targetFile = $targetFile;
     }
 
-    /**
-     * The init method: Do init steps.
-     */
-    public function init() {
-        // nothing to do here
-    }
+
 
     /**
      * The main entry point method.
      */
     public function main()
     {
-        echo $this->file;
-        echo $this->targetFile;
-        echo $this->format;
+        $file   = $this->file;
+        $target = $this->getTargetFile($file, $this->targetFile);
+
+        $cmd = 'rst2' . $this->format
+            . ' --exit-status=2'
+            . ' ' . escapeshellarg($file)
+            . ' ' . escapeshellarg($target);
+
+        $this->log('command: ' . $cmd, Project::MSG_VERBOSE);
+        passthru($cmd, $retval);
+        if ($retval != 0) {
+            throw new BuildException('Rendering rST failed');
+        }
+    }
+
+
+
+    /**
+     * Determines and returns the target file name from the
+     * input file and the configured target file name.
+     *
+     * @param string $file   Input file
+     * @param string $target Target file name, may be null
+     *
+     * @return string Target file name
+     *
+     * @uses $format
+     * @uses $targetExt
+     */
+    public function getTargetFile($file, $target)
+    {
+        if ($target != '') {
+            return $target;
+        }
+
+        if (strtolower(substr($file, -4)) == '.rst') {
+            return substr($file, 0, -3) . self::$targetExt[$this->format];
+        }
+
+        return $file . '.'  . self::$targetExt[$this->format];
     }
 }
 ?>

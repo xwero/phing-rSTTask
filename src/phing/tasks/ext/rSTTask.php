@@ -10,11 +10,21 @@ class rSTTask extends Task
 
     /**
      * Result format, defaults to "html".
-     * Possible options: html, latex, man, odt, s5, xml
+     * @see $supportedFormats for all possible options
      *
      * @var string
      */
     protected $format = 'html';
+
+    /**
+     * Array of supported output formats
+     *
+     * @var array
+     * @see $format
+     */
+    protected static $supportedFormats = array(
+        'html', 'latex', 'man', 'odt', 's5', 'xml'
+    );
 
     /**
      * Input file in rST format.
@@ -27,9 +37,13 @@ class rSTTask extends Task
     /**
      * Output file. May be omitted.
      *
+     * @internal
+     * We need to use $targetFile because Task itself defines $target
+     *
      * @var string
      */
-    protected $target = null;
+    protected $targetFile = null;
+
 
 
     /**
@@ -38,6 +52,35 @@ class rSTTask extends Task
     public function setFile($file)
     {
         $this->file = $file;
+    }
+
+
+
+    /**
+     * The setter for the attribute "format"
+     */
+    public function setFormat($format)
+    {
+        if (!in_array($format, self::$supportedFormats)) {
+            throw new BuildException(
+                sprintf(
+                    'Invalid output format "%s", allowed are: %s',
+                    $format,
+                    implode(', ', self::$supportedFormats)
+                )
+            );
+        }
+        $this->format = $format;
+    }
+
+
+
+    /**
+     * The setter for the attribute "target"
+     */
+    public function setTarget($targetFile)
+    {
+        $this->targetFile = $targetFile;
     }
 
     /**
@@ -53,7 +96,7 @@ class rSTTask extends Task
     public function main()
     {
         echo $this->file;
-        echo $this->target;
+        echo $this->targetFile;
         echo $this->format;
     }
 }

@@ -11,18 +11,24 @@
   <target name="test.single-file"
           description="render a single rST file. Only the file attribute is set"
   >
-    <rST file="../README" />
+    <rST file="../README.rst" />
   </target>
 
   <target name="test.single-file-format"
           description="render a single rST file. file+format attributes are set"
   >
-    <rST format="man" file="../README" />
+    <rST format="man" file="../README.rst" />
+  </target>
+
+  <target name="test.invalid-format"
+          description="invalid format attribute"
+  >
+    <rST format="foo" file="../README.rst" />
   </target>
 
   <target name="test.single-file-format-target"
           description="render a single rST file, file+format+target attributes"
   >
-    <rST format="html" file="../README" target="README.html" />
+    <rST format="html" file="../README.rst" target="README.html" />
   </target>
 </project>

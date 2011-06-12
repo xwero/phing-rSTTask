@@ -3,15 +3,16 @@
   <includepath classpath="../src/" />
   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
 
-  <target name="test.single.all"
-          depends="test.single-file, test.single-file-format,
-                   test.single-file-format-target"
-          />
-
-  <target name="test.single-file"
+  <target name="testSingleFileParameterFile"
           description="render a single rST file. Only the file attribute is set"
   >
     <rST file="single.rst" />
+  </target>
+
+  <target name="testSingleFileParameterFileNoExt"
+          description="render a single rST file. Only the file attribute is set"
+  >
+    <rST file="single-no-ext" />
   </target>
 
   <target name="test.single-file-format"

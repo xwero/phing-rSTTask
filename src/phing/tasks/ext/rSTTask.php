@@ -151,12 +151,32 @@ class rSTTask extends Task
     {
         $tool = $this->getToolPath();
 
-        $file   = $this->file;
-        $target = $this->getTargetFile($file, $this->targetFile);
+        if ($this->file != '') {
+            $file   = $this->file;
+            $target = $this->getTargetFile($file, $this->targetFile);
+            $this->render($tool, $file, $target);
+            return;
+        }
 
+        throw new BuildException('fileset support missing');
+    }
+
+
+
+    /**
+     * Renders a single file.
+     *
+     * @param string $tool   conversion tool to use
+     * @param string $source rST source file
+     * @param string $target target file name
+     *
+     * @return void
+     */
+    protected function render($tool, $source, $target)
+    {
         $cmd = $tool
             . ' --exit-status=2'
-            . ' ' . escapeshellarg($file)
+            . ' ' . escapeshellarg($source)
             . ' ' . escapeshellarg($target)
             . ' 2>&1';
 

@@ -1,7 +1,31 @@
 <?php
+/**
+ * reStructuredText rendering task for Phing, the PHP build tool.
+ *
+ * PHP version 5
+ *
+ * @category   Tasks
+ * @package    Phing
+ * @subpackage rST
+ * @author     Christian Weiske <cweiske@cweiske.de>
+ * @license    LGPL v3 or later http://www.gnu.org/licenses/lgpl.html
+ * @link       https://gitorious.org/phing/rsttask
+ */
 require_once 'phing/Task.php';
 require_once 'System.php';
 
+/**
+ * reStructuredText rendering task for Phing, the PHP build tool.
+ *
+ * PHP version 5
+ *
+ * @category   Tasks
+ * @package    Phing
+ * @subpackage rST
+ * @author     Christian Weiske <cweiske@cweiske.de>
+ * @license    LGPL v3 or later http://www.gnu.org/licenses/lgpl.html
+ * @link       https://gitorious.org/phing/rsttask
+ */
 class rSTTask extends Task
 {
     /**
@@ -60,10 +84,17 @@ class rSTTask extends Task
      */
     protected $targetFile = null;
 
+    protected $filesets      = array(); // all fileset objects assigned to this task
+    protected $mapperElement = null;
+
 
 
     /**
      * The setter for the attribute "file"
+     *
+     * @param string $file Path of file to render
+     *
+     * @return void
      */
     public function setFile($file)
     {
@@ -74,6 +105,12 @@ class rSTTask extends Task
 
     /**
      * The setter for the attribute "format"
+     *
+     * @param string $format Output format
+     *
+     * @return void
+     *
+     * @throws BuildException When the format is not supported
      */
     public function setFormat($format)
     {
@@ -93,6 +130,10 @@ class rSTTask extends Task
 
     /**
      * The setter for the attribute "target"
+     *
+     * @param string $targetFile Output file
+     *
+     * @return void
      */
     public function setTarget($targetFile)
     {
@@ -103,6 +144,8 @@ class rSTTask extends Task
 
     /**
      * The main entry point method.
+     *
+     * @return void
      */
     public function main()
     {
@@ -173,6 +216,39 @@ class rSTTask extends Task
         }
 
         return $file . '.'  . self::$targetExt[$this->format];
+    }
+
+
+
+    /**
+     * Nested creator, creates a FileSet for this task
+     *
+     * @return object The created fileset object
+     */
+    public function createFileSet()
+    {
+        $num = array_push($this->filesets, new FileSet());
+        return $this->filesets[$num-1];
+    }
+
+
+
+    /**
+     * Nested creator, creates one Mapper for this task
+     *
+     * @return Mapper The created Mapper type object
+     *
+     * @throws BuildException
+     */
+    public function createMapper()
+    {
+        if ($this->mapperElement !== null) {
+            throw new BuildException(
+                'Cannot define more than one mapper', $this->location
+            );
+        }
+        $this->mapperElement = new Mapper($this->project);
+        return $this->mapperElement;
     }
 }
 ?>

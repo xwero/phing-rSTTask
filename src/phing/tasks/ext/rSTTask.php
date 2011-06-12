@@ -1,5 +1,6 @@
 <?php
-require_once "phing/Task.php";
+require_once 'phing/Task.php';
+require_once 'System.php';
 
 class rSTTask extends Task
 {
@@ -105,10 +106,12 @@ class rSTTask extends Task
      */
     public function main()
     {
+        $tool = $this->getToolPath();
+
         $file   = $this->file;
         $target = $this->getTargetFile($file, $this->targetFile);
 
-        $cmd = 'rst2' . $this->format
+        $cmd = $tool
             . ' --exit-status=2'
             . ' ' . escapeshellarg($file)
             . ' ' . escapeshellarg($target);
@@ -118,6 +121,28 @@ class rSTTask extends Task
         if ($retval != 0) {
             throw new BuildException('Rendering rST failed');
         }
+    }
+
+
+
+    /**
+     * Finds the rst2* binary path
+     *
+     * @return string Full path to rst2$format
+     *
+     * @throws BuildException When the tool cannot be found
+     */
+    protected function getToolPath()
+    {
+        $tool = 'rst2' . $this->format;
+        $path = System::which($tool);
+        if (!$path) {
+            throw new BuildException(
+                sprintf('"%s" not found. Install python-docutils.', $tool)
+            );
+        }
+
+        return $path;
     }
 
 

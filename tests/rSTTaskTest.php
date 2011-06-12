@@ -33,19 +33,19 @@ class rSTTaskTest extends BuildFileTest
     public function testSingleFileParameterFile()
     {
         $this->executeTarget(__FUNCTION__);
-        $this->assertFileCreated('single.html');
+        $this->assertFileCreated('files/single.html');
     }
 
     public function testSingleFileParameterFileNoExt()
     {
         $this->executeTarget(__FUNCTION__);
-        $this->assertFileCreated('single-no-ext.html');
+        $this->assertFileCreated('files/single-no-ext.html');
     }
 
     public function testSingleFileParameterFileFormat()
     {
         $this->executeTarget(__FUNCTION__);
-        $this->assertFileCreated('single.3');
+        $this->assertFileCreated('files/single.3');
     }
 
     public function testSingleFileInvalidParameterFormat()
@@ -59,7 +59,7 @@ class rSTTaskTest extends BuildFileTest
     public function testSingleFileParameterFileFormatTarget()
     {
         $this->executeTarget(__FUNCTION__);
-        $this->assertFileCreated('single-target.html');
+        $this->assertFileCreated('files/single-target.html');
     }
 
     public function testBrokenFile()
@@ -72,7 +72,7 @@ class rSTTaskTest extends BuildFileTest
             'broken.rst:2: (WARNING/2)'
             . ' Bullet list ends without a blank line; unexpected unindent.'
         );
-        $this->assertFileCreated('broken.html');
+        $this->assertFileCreated('files/broken.html');
     }
 }
 

@@ -33,9 +33,23 @@
     <rST format="html" file="files/single.rst" target="files/single-target.html" />
   </target>
 
+
   <target name="testBrokenFile"
           description="try to render a broken file"
   >
     <rST file="files/broken.rst" />
+  </target>
+
+
+  <target name="testMultipleMapper"
+          description="render multiple rST files"
+  >
+    <rST>
+      <fileset dir=".">
+        <include name="files/single.rst" />
+        <include name="files/two.rst" />
+      </fileset>
+      <mapper type="glob" from="*.rst" to="*.my.html"/>
+    </rST>
   </target>
 </project>

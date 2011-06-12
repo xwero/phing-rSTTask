@@ -68,6 +68,10 @@ class rSTTaskTest extends BuildFileTest
             __FUNCTION__, 'Broken file',
             'Rendering rST failed'
         );
+        $this->assertInLogs(
+            'broken.rst:2: (WARNING/2)'
+            . ' Bullet list ends without a blank line; unexpected unindent.'
+        );
         $this->assertFileCreated('broken.html');
     }
 }

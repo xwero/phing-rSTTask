@@ -15,19 +15,19 @@
     <rST file="single-no-ext" />
   </target>
 
-  <target name="test.single-file-format"
+  <target name="testSingleFileParameterFileFormat"
           description="render a single rST file. file+format attributes are set"
   >
     <rST format="man" file="single.rst" />
   </target>
 
-  <target name="test.invalid-format"
+  <target name="testSingleFileInvalidParameterFormat"
           description="invalid format attribute"
   >
     <rST format="foo" file="single.rst" />
   </target>
 
-  <target name="test.single-file-format-target"
+  <target name="testSingleFileParameterFileFormatTarget"
           description="render a single rST file, file+format+target attributes"
   >
     <rST format="html" file="single.rst" target="single-target.html" />

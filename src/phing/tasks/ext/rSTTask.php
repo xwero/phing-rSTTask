@@ -114,13 +114,16 @@ class rSTTask extends Task
         $cmd = $tool
             . ' --exit-status=2'
             . ' ' . escapeshellarg($file)
-            . ' ' . escapeshellarg($target);
+            . ' ' . escapeshellarg($target)
+            . ' 2>&1';
 
         $this->log('command: ' . $cmd, Project::MSG_VERBOSE);
-        passthru($cmd, $retval);
+        exec($cmd, $arOutput, $retval);
         if ($retval != 0) {
+            $this->log(implode("\n", $arOutput), Project::MSG_INFO);
             throw new BuildException('Rendering rST failed');
         }
+        $this->log(implode("\n", $arOutput), Project::MSG_DEBUG);
     }
 
 

@@ -32,4 +32,10 @@
   >
     <rST format="html" file="single.rst" target="single-target.html" />
   </target>
+
+  <target name="testBrokenFile"
+          description="try to render a broken file"
+  >
+    <rST file="broken.rst" />
+  </target>
 </project>

@@ -61,6 +61,15 @@ class rSTTaskTest extends BuildFileTest
         $this->executeTarget(__FUNCTION__);
         $this->assertFileCreated('single-target.html');
     }
+
+    public function testBrokenFile()
+    {
+        $this->expectBuildExceptionContaining(
+            __FUNCTION__, 'Broken file',
+            'Rendering rST failed'
+        );
+        $this->assertFileCreated('broken.html');
+    }
 }
 
 ?>

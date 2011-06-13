@@ -41,6 +41,7 @@
   </target>
 
 
+
   <target name="testMultiple"
           description="render multiple rST files"
   >
@@ -48,6 +49,27 @@
       <fileset dir=".">
         <include name="files/single.rst" />
         <include name="files/two.rst" />
+      </fileset>
+    </rST>
+  </target>
+
+  <target name="testMultipleDir"
+          description='render multiple rST files, with a "dir" attribute'
+  >
+    <rST>
+      <fileset dir="files">
+        <include name="single.rst" />
+        <include name="two.rst" />
+      </fileset>
+    </rST>
+  </target>
+
+  <target name="testMultipleDirWildcard"
+          description='render multiple rST files, dir attribute and wildcard'
+  >
+    <rST>
+      <fileset dir="files">
+        <include name="s*.rst" />
       </fileset>
     </rST>
   </target>

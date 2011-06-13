@@ -81,6 +81,19 @@ class rSTTaskTest extends BuildFileTest
         $this->assertFileCreated('files/single.html');
         $this->assertFileCreated('files/two.html');
     }
+
+    public function testMultipleDir()
+    {
+        $this->executeTarget(__FUNCTION__);
+        $this->assertFileCreated('files/single.html');
+        $this->assertFileCreated('files/two.html');
+    }
+
+    public function testMultipleDirWildcard()
+    {
+        $this->executeTarget(__FUNCTION__);
+        $this->assertFileCreated('files/single.html');
+    }
 }
 
 ?>

@@ -13,13 +13,13 @@ Features
 - multiple output formats
 - automatically overwrites old files
 - filter chains
+- custom rst2* parameters
 
 
 Missing features
 ================
 - update check
 - automatically create directories
-- custom rst2* parameters
 
 
 Dependencies

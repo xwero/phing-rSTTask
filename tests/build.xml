@@ -109,4 +109,13 @@
     </rST>
   </target>
 
+
+
+  <target name="testCustomParameter"
+          description="pass custom parameters to the rst2* tool"
+  >
+    <rST file="files/single.rst"
+         toolparam="--stylesheet-path=custom.css" />
+  </target>
+
 </project>

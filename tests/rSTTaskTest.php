@@ -122,6 +122,19 @@ class rSTTaskTest extends BuildFileTest
         $this->assertContains('This is a bar.', $cont);
         unlink(dirname(__FILE__) . '/files/filterchain.html');
     }
+
+
+
+    public function testCustomParameter()
+    {
+        $this->executeTarget(__FUNCTION__);
+        $this->assertFileExists('files/single.html');
+        $file = dirname(__FILE__) . '/files/single.html';
+        $cont = file_get_contents($file);
+        $this->assertContains('this is a custom css file', $cont);
+        $this->assertContains('#FF8000', $cont);
+        unlink($file);
+    }
 }
 
 ?>

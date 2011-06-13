@@ -76,6 +76,13 @@ class rSTTask extends Task
     protected $file = null;
 
     /**
+     * Additional rst2* tool parameters.
+     *
+     * @var string
+     */
+    protected $toolParam = null;
+
+    /**
      * Output file. May be omitted.
      *
      * @internal
@@ -153,6 +160,18 @@ class rSTTask extends Task
     public function setTarget($targetFile)
     {
         $this->targetFile = $targetFile;
+    }
+
+    /**
+     * The setter for the attribute "toolparam"
+     *
+     * @param string $param Additional rst2* tool parameters
+     *
+     * @return void
+     */
+    public function setToolparam($param)
+    {
+        $this->toolParam = $param;
     }
 
 
@@ -252,6 +271,7 @@ class rSTTask extends Task
     {
         $cmd = $tool
             . ' --exit-status=2'
+            . ' ' . $this->toolParam
             . ' ' . escapeshellarg($source)
             . ' ' . escapeshellarg($target)
             . ' 2>&1';

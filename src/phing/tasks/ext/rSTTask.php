@@ -183,7 +183,7 @@ class rSTTask extends Task
      */
     public function main()
     {
-        $tool = $this->getToolPath();
+        $tool = $this->getToolPath($this->format);
         if (count($this->filterChains)) {
             $this->fileUtils = new FileUtils();
         }
@@ -290,13 +290,15 @@ class rSTTask extends Task
     /**
      * Finds the rst2* binary path
      *
+     * @param string $format Output format
+     *
      * @return string Full path to rst2$format
      *
      * @throws BuildException When the tool cannot be found
      */
-    protected function getToolPath()
+    protected function getToolPath($format)
     {
-        $tool = 'rst2' . $this->format;
+        $tool = 'rst2' . $format;
         $path = System::which($tool);
         if (!$path) {
             throw new BuildException(

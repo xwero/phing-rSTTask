@@ -41,8 +41,20 @@
   </target>
 
 
-  <target name="testMultipleMapper"
+  <target name="testMultiple"
           description="render multiple rST files"
+  >
+    <rST>
+      <fileset dir=".">
+        <include name="files/single.rst" />
+        <include name="files/two.rst" />
+      </fileset>
+    </rST>
+  </target>
+
+
+  <target name="testMultipleMapper"
+          description="render multiple rST files and map their names"
   >
     <rST>
       <fileset dir=".">

@@ -74,6 +74,13 @@ class rSTTaskTest extends BuildFileTest
         );
         $this->assertFileCreated('files/broken.html');
     }
+
+    public function testMultiple()
+    {
+        $this->executeTarget(__FUNCTION__);
+        $this->assertFileCreated('files/single.html');
+        $this->assertFileCreated('files/two.html');
+    }
 }
 
 ?>

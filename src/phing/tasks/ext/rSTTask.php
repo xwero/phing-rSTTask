@@ -112,71 +112,6 @@ class rSTTask extends Task
 
 
     /**
-     * The setter for the attribute "file"
-     *
-     * @param string $file Path of file to render
-     *
-     * @return void
-     */
-    public function setFile($file)
-    {
-        $this->file = $file;
-    }
-
-
-
-    /**
-     * The setter for the attribute "format"
-     *
-     * @param string $format Output format
-     *
-     * @return void
-     *
-     * @throws BuildException When the format is not supported
-     */
-    public function setFormat($format)
-    {
-        if (!in_array($format, self::$supportedFormats)) {
-            throw new BuildException(
-                sprintf(
-                    'Invalid output format "%s", allowed are: %s',
-                    $format,
-                    implode(', ', self::$supportedFormats)
-                )
-            );
-        }
-        $this->format = $format;
-    }
-
-
-
-    /**
-     * The setter for the attribute "target"
-     *
-     * @param string $targetFile Output file
-     *
-     * @return void
-     */
-    public function setTarget($targetFile)
-    {
-        $this->targetFile = $targetFile;
-    }
-
-    /**
-     * The setter for the attribute "toolparam"
-     *
-     * @param string $param Additional rst2* tool parameters
-     *
-     * @return void
-     */
-    public function setToolparam($param)
-    {
-        $this->toolParam = $param;
-    }
-
-
-
-    /**
      * The main entry point method.
      *
      * @return void
@@ -334,6 +269,71 @@ class rSTTask extends Task
         }
 
         return $file . '.'  . self::$targetExt[$this->format];
+    }
+
+
+
+    /**
+     * The setter for the attribute "file"
+     *
+     * @param string $file Path of file to render
+     *
+     * @return void
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+
+
+    /**
+     * The setter for the attribute "format"
+     *
+     * @param string $format Output format
+     *
+     * @return void
+     *
+     * @throws BuildException When the format is not supported
+     */
+    public function setFormat($format)
+    {
+        if (!in_array($format, self::$supportedFormats)) {
+            throw new BuildException(
+                sprintf(
+                    'Invalid output format "%s", allowed are: %s',
+                    $format,
+                    implode(', ', self::$supportedFormats)
+                )
+            );
+        }
+        $this->format = $format;
+    }
+
+
+
+    /**
+     * The setter for the attribute "target"
+     *
+     * @param string $targetFile Output file
+     *
+     * @return void
+     */
+    public function setTarget($targetFile)
+    {
+        $this->targetFile = $targetFile;
+    }
+
+    /**
+     * The setter for the attribute "toolparam"
+     *
+     * @param string $param Additional rst2* tool parameters
+     *
+     * @return void
+     */
+    public function setToolparam($param)
+    {
+        $this->toolParam = $param;
     }
 
 

@@ -12,14 +12,14 @@ Features
 - mappers to generate output file names based on the rst ones
 - multiple output formats
 - automatically overwrites old files
+- filter chains
 
 
 Missing features
 ================
-- filter chains
-- FIXME: update check
+- update check
 - automatically create directories
-- custom parameters
+- custom rst2* parameters
 
 
 Dependencies

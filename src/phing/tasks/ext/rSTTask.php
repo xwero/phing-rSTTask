@@ -12,6 +12,7 @@
  * @link       https://gitorious.org/phing/rsttask
  */
 require_once 'phing/Task.php';
+require_once 'phing/util/FileUtils.php';
 require_once 'System.php';
 
 /**
@@ -87,6 +88,20 @@ class rSTTask extends Task
     protected $filesets      = array(); // all fileset objects assigned to this task
     protected $mapperElement = null;
 
+    /**
+     * all filterchains objects assigned to this task
+     *
+     * @var array
+     */
+    protected $filterChains = array();
+
+    /**
+     * mode to create directories with
+     *
+     * @var integer
+     */
+    protected $mode = 0755;
+
 
 
     /**
@@ -150,6 +165,9 @@ class rSTTask extends Task
     public function main()
     {
         $tool = $this->getToolPath();
+        if (count($this->filterChains)) {
+            $this->fileUtils = new FileUtils();
+        }
 
         if ($this->file != '') {
             $file   = $this->file;
@@ -171,7 +189,7 @@ class rSTTask extends Task
         }
 
         $project = $this->getProject();
-        foreach($this->filesets as $fs) {
+        foreach ($this->filesets as $fs) {
             $ds = $fs->getDirectoryScanner($project);
             $fromDir  = $fs->getDir($project);
             $srcFiles = $ds->getIncludedFiles();
@@ -191,7 +209,7 @@ class rSTTask extends Task
 
 
     /**
-     * Renders a single file.
+     * Renders a single file and applies filters on it
      *
      * @param string $tool   conversion tool to use
      * @param string $source rST source file
@@ -200,6 +218,37 @@ class rSTTask extends Task
      * @return void
      */
     protected function render($tool, $source, $target)
+    {
+        if (count($this->filterChains) == 0) {
+            return $this->renderFile($tool, $source, $target);
+        }
+
+        $tmpTarget = tempnam(sys_get_temp_dir(), 'rST-');
+        $this->renderFile($tool, $source, $tmpTarget);
+
+        $this->fileUtils->copyFile(
+            new PhingFile($tmpTarget),
+            new PhingFile($target),
+            true, false, $this->filterChains,
+            $this->getProject(), $this->mode
+        );
+        unlink($tmpTarget);
+    }
+
+
+
+    /**
+     * Renders a single file with the rST tool.
+     *
+     * @param string $tool   conversion tool to use
+     * @param string $source rST source file
+     * @param string $target target file name
+     *
+     * @return void
+     *
+     * @throws BuildException When the conversion fails
+     */
+    protected function renderFile($tool, $source, $target)
     {
         $cmd = $tool
             . ' --exit-status=2'
@@ -296,6 +345,19 @@ class rSTTask extends Task
         }
         $this->mapperElement = new Mapper($this->project);
         return $this->mapperElement;
+    }
+
+
+
+    /**
+     * Creates a filterchain, stores and returns it
+     *
+     * @return FilterChain The created filterchain object
+     */
+    public function createFilterChain()
+    {
+        $num = array_push($this->filterChains, new FilterChain($this->project));
+        return $this->filterChains[$num-1];
     }
 }
 ?>

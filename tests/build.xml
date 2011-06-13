@@ -93,4 +93,20 @@
     </rST>
   </target>
 
+
+  <target name="testFilterChain"
+          description="use a filter chain"
+  >
+    <rST>
+      <fileset dir=".">
+        <include name="files/filterchain.rst" />
+      </fileset>
+      <filterchain>
+        <replacetokens begintoken="##" endtoken="##">
+          <token key="foo" value="bar" />
+        </replacetokens>
+      </filterchain>
+    </rST>
+  </target>
+
 </project>

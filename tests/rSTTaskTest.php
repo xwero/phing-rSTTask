@@ -110,6 +110,18 @@ class rSTTaskTest extends BuildFileTest
         $this->assertFileCreated('files/single.my.html');
         $this->assertFileCreated('files/two.my.html');
     }
+
+
+    public function testFilterChain()
+    {
+        $this->executeTarget(__FUNCTION__);
+        $this->assertFileExists('files/filterchain.html');
+        $cont = file_get_contents(
+            dirname(__FILE__) . '/files/filterchain.html'
+        );
+        $this->assertContains('This is a bar.', $cont);
+        unlink(dirname(__FILE__) . '/files/filterchain.html');
+    }
 }
 
 ?>

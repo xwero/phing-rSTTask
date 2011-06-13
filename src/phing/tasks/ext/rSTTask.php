@@ -165,6 +165,11 @@ class rSTTask extends Task
         }
 
         // process filesets
+        $mapper = null;
+        if ($this->mapperElement !== null) {
+            $mapper = $this->mapperElement->getImplementation();
+        }
+
         $project = $this->getProject();
         foreach($this->filesets as $fs) {
             $ds = $fs->getDirectoryScanner($project);
@@ -173,7 +178,11 @@ class rSTTask extends Task
 
             foreach ($srcFiles as $src) {
                 $file  = new PhingFile($fromDir, $src);
-                $target = $this->getTargetFile($file);
+                if ($mapper !== null) {
+                    $target = reset($mapper->main($file));
+                } else {
+                    $target = $this->getTargetFile($file);
+                }
                 $this->render($tool, $file, $target);
             }
         }

@@ -22,8 +22,8 @@ class rSTTaskTest extends BuildFileTest
      */
     protected function assertFileCreated($file)
     {
-        $this->assertTrue(
-            file_exists(dirname(__FILE__) . '/' . $file),
+        $this->assertFileExists(
+            dirname(__FILE__) . '/' . $file,
             $file . ' has not been created'
         );
         unlink(dirname(__FILE__) . '/' . $file);
@@ -101,6 +101,14 @@ class rSTTaskTest extends BuildFileTest
     {
         $this->executeTarget(__FUNCTION__);
         $this->assertFileCreated('files/single.html');
+    }
+
+
+    public function testMultipleMapper()
+    {
+        $this->executeTarget(__FUNCTION__);
+        $this->assertFileCreated('files/single.my.html');
+        $this->assertFileCreated('files/two.my.html');
     }
 }
 

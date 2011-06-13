@@ -92,4 +92,5 @@
       <mapper type="glob" from="*.rst" to="*.my.html"/>
     </rST>
   </target>
+
 </project>

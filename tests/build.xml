@@ -40,6 +40,12 @@
     <rST file="files/broken.rst" />
   </target>
 
+  <target name="testMissingFiles"
+          description="omit both file and fileset params"
+  >
+    <rST />
+  </target>
+
 
 
   <target name="testMultiple"

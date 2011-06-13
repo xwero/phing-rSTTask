@@ -75,6 +75,14 @@ class rSTTaskTest extends BuildFileTest
         $this->assertFileCreated('files/broken.html');
     }
 
+    public function testMissingFiles()
+    {
+        $this->expectBuildExceptionContaining(
+            __FUNCTION__, 'Missing attributes/tags',
+            '"file" attribute or "fileset" subtag required'
+        );
+    }
+
     public function testMultiple()
     {
         $this->executeTarget(__FUNCTION__);

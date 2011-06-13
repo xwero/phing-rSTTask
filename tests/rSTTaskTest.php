@@ -30,6 +30,21 @@ class rSTTaskTest extends BuildFileTest
     }
 
 
+
+    /**
+     * @expectedException BuildException
+     * @expectedExceptionMessage "rst2doesnotexist" not found. Install python-docutils.
+     */
+    public function testGetToolPathFail()
+    {
+        $rt = new rSTTask();
+        $ref = new ReflectionClass($rt);
+        $method = $ref->getMethod('getToolPath');
+        $method->setAccessible(true);
+        $method->invoke($rt, 'doesnotexist');
+    }
+
+
     public function testSingleFileParameterFile()
     {
         $this->executeTarget(__FUNCTION__);

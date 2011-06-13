@@ -18,6 +18,8 @@ Missing features
 - mappers to generate rst output file names based on the rst ones
 - filter chains
 - FIXME: update check
+- automatically create directories
+- custom parameters
 
 
 Dependencies

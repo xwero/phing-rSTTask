@@ -8,13 +8,13 @@ Renders rST (reStructuredText) files into different output formats
 Features
 ========
 - renders single files
+- render nested filesets
 - multiple output formats
 - automatically overwrites old files
 
 
 Missing features
 ================
-- render nested filesets
 - mappers to generate rst output file names based on the rst ones
 - filter chains
 - FIXME: update check

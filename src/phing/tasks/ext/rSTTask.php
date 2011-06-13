@@ -158,7 +158,25 @@ class rSTTask extends Task
             return;
         }
 
-        throw new BuildException('fileset support missing');
+        if (!count($this->filesets)) {
+            throw new BuildException(
+                '"file" attribute or "fileset" subtag required'
+            );
+        }
+
+        // process filesets
+        $project = $this->getProject();
+        foreach($this->filesets as $fs) {
+            $ds = $fs->getDirectoryScanner($project);
+            $fromDir  = $fs->getDir($project);
+            $srcFiles = $ds->getIncludedFiles();
+
+            foreach ($srcFiles as $src) {
+                $file  = new PhingFile($fromDir, $src);
+                $target = $this->getTargetFile($file);
+                $this->render($tool, $file, $target);
+            }
+        }
     }
 
 
@@ -225,7 +243,7 @@ class rSTTask extends Task
      * @uses $format
      * @uses $targetExt
      */
-    public function getTargetFile($file, $target)
+    public function getTargetFile($file, $target = null)
     {
         if ($target != '') {
             return $target;

@@ -83,6 +83,13 @@ class rSTTask extends Task
     protected $toolParam = null;
 
     /**
+     * Full path to the tool, i.e. /usr/local/bin/rst2html
+     *
+     * @var string
+     */
+    protected $toolPath = null;
+
+    /**
      * Output file. May be omitted.
      *
      * @internal
@@ -233,6 +240,10 @@ class rSTTask extends Task
      */
     protected function getToolPath($format)
     {
+        if ($this->toolPath !== null) {
+            return $this->toolPath;
+        }
+
         $tool = 'rst2' . $format;
         $path = System::which($tool);
         if (!$path) {
@@ -334,6 +345,34 @@ class rSTTask extends Task
     public function setToolparam($param)
     {
         $this->toolParam = $param;
+    }
+
+    /**
+     * The setter for the attribute "toolpath"
+     *
+     * @param string $param Full path to tool path, i.e. /usr/local/bin/rst2html
+     *
+     * @return void
+     *
+     * @throws BuildException When the tool does not exist or is not executable
+     */
+    public function setToolpath($path)
+    {
+        if (!file_exists($path)) {
+            $fullpath = System::which($path);
+            if ($fullpath === false) {
+                throw new BuildException(
+                    'Tool does not exist. Path: ' . $path
+                );
+            }
+            $path = $fullpath;
+        }
+        if (!is_executable($path)) {
+            throw new BuildException(
+                'Tool not executable. Path: ' . $path
+            );
+        }
+        $this->toolPath = $path;
     }
 
 

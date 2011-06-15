@@ -14,6 +14,7 @@ Features
 - automatically overwrites old files
 - filter chains
 - custom rst2* parameters
+- configurable rst tool path
 
 
 Missing features

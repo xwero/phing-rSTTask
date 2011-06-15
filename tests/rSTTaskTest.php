@@ -44,6 +44,41 @@ class rSTTaskTest extends BuildFileTest
         $method->invoke($rt, 'doesnotexist');
     }
 
+    /**
+     * Get the tool path previously set with setToolPath()
+     */
+    public function testGetToolPathCustom()
+    {
+        $rt = new rSTTask();
+        $rt->setToolPath('true');//mostly /bin/true on unix
+        $ref = new ReflectionClass($rt);
+        $method = $ref->getMethod('getToolPath');
+        $method->setAccessible(true);
+        $this->assertContains('/true', $method->invoke($rt, 'foo'));
+    }
+
+
+
+    /**
+     * @expectedException BuildException
+     * @expectedExceptionMessage Tool does not exist. Path:
+     */
+    public function testSetToolpathNotExisting()
+    {
+        $rt = new rSTTask();
+        $rt->setToolPath('doesnotandwillneverexist');
+    }
+
+    /**
+     * @expectedException BuildException
+     * @expectedExceptionMessage Tool not executable. Path:
+     */
+    public function testSetToolpathNonExecutable()
+    {
+        $rt = new rSTTask();
+        $rt->setToolPath(__FILE__);
+    }
+
 
     public function testSingleFileParameterFile()
     {

@@ -30,7 +30,7 @@
   <target name="testSingleFileParameterFileFormatTarget"
           description="render a single rST file, file+format+target attributes"
   >
-    <rST format="html" file="files/single.rst" target="files/single-target.html" />
+    <rST format="html" file="files/single.rst" targetfile="files/single-target.html" />
   </target>
 
 

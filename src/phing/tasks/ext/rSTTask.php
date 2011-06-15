@@ -92,9 +92,6 @@ class rSTTask extends Task
     /**
      * Output file. May be omitted.
      *
-     * @internal
-     * We need to use $targetFile because Task itself defines $target
-     *
      * @var string
      */
     protected $targetFile = null;
@@ -132,8 +129,8 @@ class rSTTask extends Task
 
         if ($this->file != '') {
             $file   = $this->file;
-            $target = $this->getTargetFile($file, $this->targetFile);
-            $this->render($tool, $file, $target);
+            $targetFile = $this->getTargetFile($file, $this->targetFile);
+            $this->render($tool, $file, $targetFile);
             return;
         }
 
@@ -158,11 +155,11 @@ class rSTTask extends Task
             foreach ($srcFiles as $src) {
                 $file  = new PhingFile($fromDir, $src);
                 if ($mapper !== null) {
-                    $target = reset($mapper->main($file));
+                    $targetFile = reset($mapper->main($file));
                 } else {
-                    $target = $this->getTargetFile($file);
+                    $targetFile = $this->getTargetFile($file);
                 }
-                $this->render($tool, $file, $target);
+                $this->render($tool, $file, $targetFile);
             }
         }
     }
@@ -172,16 +169,16 @@ class rSTTask extends Task
     /**
      * Renders a single file and applies filters on it
      *
-     * @param string $tool   conversion tool to use
-     * @param string $source rST source file
-     * @param string $target target file name
+     * @param string $tool       conversion tool to use
+     * @param string $source     rST source file
+     * @param string $targetFile target file name
      *
      * @return void
      */
-    protected function render($tool, $source, $target)
+    protected function render($tool, $source, $targetFile)
     {
         if (count($this->filterChains) == 0) {
-            return $this->renderFile($tool, $source, $target);
+            return $this->renderFile($tool, $source, $targetFile);
         }
 
         $tmpTarget = tempnam(sys_get_temp_dir(), 'rST-');
@@ -189,7 +186,7 @@ class rSTTask extends Task
 
         $this->fileUtils->copyFile(
             new PhingFile($tmpTarget),
-            new PhingFile($target),
+            new PhingFile($targetFile),
             true, false, $this->filterChains,
             $this->getProject(), $this->mode
         );
@@ -201,21 +198,21 @@ class rSTTask extends Task
     /**
      * Renders a single file with the rST tool.
      *
-     * @param string $tool   conversion tool to use
-     * @param string $source rST source file
-     * @param string $target target file name
+     * @param string $tool       conversion tool to use
+     * @param string $source     rST source file
+     * @param string $targetFile target file name
      *
      * @return void
      *
      * @throws BuildException When the conversion fails
      */
-    protected function renderFile($tool, $source, $target)
+    protected function renderFile($tool, $source, $targetFile)
     {
         $cmd = $tool
             . ' --exit-status=2'
             . ' ' . $this->toolParam
             . ' ' . escapeshellarg($source)
-            . ' ' . escapeshellarg($target)
+            . ' ' . escapeshellarg($targetFile)
             . ' 2>&1';
 
         $this->log('command: ' . $cmd, Project::MSG_VERBOSE);
@@ -261,18 +258,18 @@ class rSTTask extends Task
      * Determines and returns the target file name from the
      * input file and the configured target file name.
      *
-     * @param string $file   Input file
-     * @param string $target Target file name, may be null
+     * @param string $file       Input file
+     * @param string $targetFile Target file name, may be null
      *
      * @return string Target file name
      *
      * @uses $format
      * @uses $targetExt
      */
-    public function getTargetFile($file, $target = null)
+    public function getTargetFile($file, $targetFile = null)
     {
-        if ($target != '') {
-            return $target;
+        if ($targetFile != '') {
+            return $targetFile;
         }
 
         if (strtolower(substr($file, -4)) == '.rst') {
@@ -324,13 +321,13 @@ class rSTTask extends Task
 
 
     /**
-     * The setter for the attribute "target"
+     * The setter for the attribute "targetfile"
      *
      * @param string $targetFile Output file
      *
      * @return void
      */
-    public function setTarget($targetFile)
+    public function setTargetfile($targetFile)
     {
         $this->targetFile = $targetFile;
     }

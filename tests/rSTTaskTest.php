@@ -125,6 +125,15 @@ class rSTTaskTest extends BuildFileTest
         unlink($file);
     }
 
+    public function testDirectoryCreation()
+    {
+        $this->executeTarget(__FUNCTION__);
+        $this->assertFileCreated('files/a/b/c/single.html');
+        rmdir(dirname(__FILE__) . '/files/a/b/c');
+        rmdir(dirname(__FILE__) . '/files/a/b');
+        rmdir(dirname(__FILE__) . '/files/a');
+    }
+
     public function testBrokenFile()
     {
         $this->expectBuildExceptionContaining(

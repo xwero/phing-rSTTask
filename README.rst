@@ -16,11 +16,7 @@ Features
 - custom rst2* parameters
 - configurable rst tool path
 - update check
-
-
-Missing features
-================
-- automatically create directories
+- automatically creates target directories
 
 
 Dependencies

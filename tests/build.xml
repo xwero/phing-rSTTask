@@ -42,6 +42,14 @@
     <rST file="files/single.rst" uptodate="yes" />
   </target>
 
+
+  <target name="testDirectoryCreation"
+          description="Test if creating target directories works"
+  >
+    <rST file="files/single.rst" targetfile="files/a/b/c/single.html" />
+  </target>
+
+
   <target name="testBrokenFile"
           description="try to render a broken file"
   >

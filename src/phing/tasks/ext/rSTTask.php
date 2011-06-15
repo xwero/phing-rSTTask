@@ -222,6 +222,10 @@ class rSTTask extends Task
             //target is up to date
             return;
         }
+        $targetDir = dirname($targetFile);
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, $this->mode, true);
+        }
 
         $cmd = $tool
             . ' --exit-status=2'

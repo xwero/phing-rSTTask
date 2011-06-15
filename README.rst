@@ -15,11 +15,11 @@ Features
 - filter chains
 - custom rst2* parameters
 - configurable rst tool path
+- update check
 
 
 Missing features
 ================
-- update check
 - automatically create directories
 
 

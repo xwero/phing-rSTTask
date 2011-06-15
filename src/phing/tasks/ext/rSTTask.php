@@ -113,6 +113,14 @@ class rSTTask extends Task
      */
     protected $mode = 0755;
 
+    /**
+     * Only render files whole source files are newer than the
+     * target files
+     *
+     * @var boolean
+     */
+    protected $uptodate = false;
+
 
 
     /**
@@ -208,6 +216,13 @@ class rSTTask extends Task
      */
     protected function renderFile($tool, $source, $targetFile)
     {
+        if ($this->uptodate && file_exists($targetFile)
+            && filemtime($source) <= filemtime($targetFile)
+        ) {
+            //target is up to date
+            return;
+        }
+
         $cmd = $tool
             . ' --exit-status=2'
             . ' ' . $this->toolParam
@@ -370,6 +385,18 @@ class rSTTask extends Task
             );
         }
         $this->toolPath = $path;
+    }
+
+    /**
+     * The setter for the attribute "uptodate"
+     *
+     * @param string $uptodate True/false
+     *
+     * @return void
+     */
+    public function setUptodate($uptodate)
+    {
+        $this->uptodate = (boolean)$uptodate;
     }
 
 

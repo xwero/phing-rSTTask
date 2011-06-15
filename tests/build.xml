@@ -34,6 +34,14 @@
   </target>
 
 
+  <target name="testParameterUptodate"
+          description="Test if the uptodate attribute works"
+  >
+    <delete file="files/single.html" quiet="yes" />
+    <touch file="files/single.html" />
+    <rST file="files/single.rst" uptodate="yes" />
+  </target>
+
   <target name="testBrokenFile"
           description="try to render a broken file"
   >

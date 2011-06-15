@@ -112,6 +112,19 @@ class rSTTaskTest extends BuildFileTest
         $this->assertFileCreated('files/single-target.html');
     }
 
+    public function testParameterUptodate()
+    {
+        $this->executeTarget(__FUNCTION__);
+        $file = dirname(__FILE__) . '/files/single.html';
+        $this->assertFileExists($file);
+        $this->assertEquals(
+            0, filesize($file),
+            'File size is not 0, which it should have been when'
+            . ' rendering was skipped'
+        );
+        unlink($file);
+    }
+
     public function testBrokenFile()
     {
         $this->expectBuildExceptionContaining(
@@ -165,12 +178,11 @@ class rSTTaskTest extends BuildFileTest
     public function testFilterChain()
     {
         $this->executeTarget(__FUNCTION__);
-        $this->assertFileExists('files/filterchain.html');
-        $cont = file_get_contents(
-            dirname(__FILE__) . '/files/filterchain.html'
-        );
+        $file = dirname(__FILE__) . '/files/filterchain.html';
+        $this->assertFileExists($file);
+        $cont = file_get_contents($file);
         $this->assertContains('This is a bar.', $cont);
-        unlink(dirname(__FILE__) . '/files/filterchain.html');
+        unlink($file);
     }
 
 

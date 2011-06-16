@@ -66,6 +66,23 @@ Dependencies
   `rst2xml`.
 
 
+Installation
+============
+As long as the rSTTask is not distributed with phing, you need to make
+Phing aware of it.
+
+First, clone the Git repository: ::
+
+ $ git clone git://gitorious.org/phing/rsttask.git
+
+Now, in your own ``build.xml`` file do the following ::
+
+ <?xml version="1.0" encoding="utf-8"?>
+ <project name="test" basedir="." default="test.single.all">
+   <includepath classpath="/path-to-git-checkout/src/" />
+   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
+   ...
+
 
 Examples
 ========
@@ -78,10 +95,10 @@ the correct one for the output format. ::
 
  <?xml version="1.0" encoding="utf-8"?>
  <project name="example" basedir="." default="single">
-   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
-
    <target name="single" description="render a single rST file to HTML">
+
      <rST file="path/to/file.rst" />
+
    </target>
  </project>
 
@@ -92,10 +109,10 @@ The ``format`` attribute determines the output format: ::
 
  <?xml version="1.0" encoding="utf-8"?>
  <project name="example" basedir="." default="single">
-   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
-
    <target name="single" description="render a single rST file to S5 HTML">
+
      <rST file="path/to/file.rst" format="s5" />
+
    </target>
  </project>
 
@@ -106,10 +123,10 @@ Specifying the output file name
 
  <?xml version="1.0" encoding="utf-8"?>
  <project name="example" basedir="." default="single">
-   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
-
    <target name="single" description="render a single rST file">
+
      <rST file="path/to/file.rst" targetfile="path/to/output/file.html" />
+
    </target>
  </project>
 
@@ -120,15 +137,15 @@ A nested ``fileset`` tag may be used to specify multiple files. ::
 
  <?xml version="1.0" encoding="utf-8"?>
  <project name="example" basedir="." default="multiple">
-   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
-
    <target name="multiple" description="renders several rST files">
+
      <rST>
       <fileset dir=".">
         <include name="README.rst" />
         <include name="docs/\*.rst" />
       </fileset>
      </rST>
+
    </target>
  </project>
 
@@ -139,9 +156,8 @@ A nested ``mapper`` may be used to determine the output file names. ::
 
  <?xml version="1.0" encoding="utf-8"?>
  <project name="example" basedir="." default="multiple">
-   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
-
    <target name="multiple" description="renders several rST files">
+
      <rST>
       <fileset dir=".">
         <include name="README.rst" />
@@ -149,6 +165,7 @@ A nested ``mapper`` may be used to determine the output file names. ::
       </fileset>
       <mapper type="glob" from="\*.rst" to="path/to/my/\*.xhtml"/>
      </rST>
+
    </target>
  </project>
 
@@ -160,9 +177,8 @@ after rendering, i.e. the version of your software. ::
 
  <?xml version="1.0" encoding="utf-8"?>
  <project name="example" basedir="." default="filterchain">
-   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
-
    <target name="filterchain" description="renders several rST files">
+
      <rST>
       <fileset dir=".">
         <include name="README.rst" />
@@ -174,6 +190,7 @@ after rendering, i.e. the version of your software. ::
         </replacetokens>
       </filterchain>
      </rST>
+
    </target>
  </project>
 
@@ -185,10 +202,10 @@ with the ``toolparam`` attribute. ::
 
  <?xml version="1.0" encoding="utf-8"?>
  <project name="example" basedir="." default="single">
-   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
-
    <target name="single" description="render a single rST file to S5 HTML">
+
      <rST file="path/to/file.rst" toolparam="--stylesheet-path=custom.css" />
+
    </target>
  </project>
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="rSTTaskBuild" basedir="." default="build">
+  <includepath classpath="src/" />
+  <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
+
+  <target name="build" depends="renderDocs, runTests">
+  </target>
+
+  <target name="renderDocs" description="render documentation">
+    <rST file="README.rst" />
+  </target>
+
+  <target name="runTests">
+    <!-- the native task does not support loading a configuration xml file
+         see http://www.phing.info/trac/ticket/437 -->
+    <exec command="phpunit ." dir="tests"
+          passthru="true" checkreturn="true"
+          />
+  </target>
+
+
+  <target name="cleanup">
+    <delete file="README.html" quiet="true" />
+  </target>
+
+</project>

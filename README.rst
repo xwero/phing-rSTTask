@@ -2,7 +2,9 @@
 Phing rST task
 ==============
 
-Renders rST (reStructuredText) files into different output formats
+Renders rST (reStructuredText) files into different output formats.
+
+Homepage: https://gitorious.org/phing/rsttask
 
 .. contents::
 
@@ -66,6 +68,13 @@ Dependencies
   `rst2xml`.
 
 
+License
+=======
+The Phing rSTTask is licensed under the `LGPLv3 or later`__.
+
+__ http://www.gnu.org/licenses/lgpl.html
+
+
 Installation
 ============
 As long as the rSTTask is not distributed with phing, you need to make
@@ -74,6 +83,15 @@ Phing aware of it.
 First, clone the Git repository: ::
 
  $ git clone git://gitorious.org/phing/rsttask.git
+ $ cd rsttask
+ $ phing
+
+Phing will render this ``README.rst`` into ``README.html`` and run
+the unit tests.
+
+
+Usage
+=====
 
 Now, in your own ``build.xml`` file do the following ::
 
@@ -189,6 +207,26 @@ after rendering, i.e. the version of your software. ::
           <token key="VERSION" value="1.23.0" />
         </replacetokens>
       </filterchain>
+     </rST>
+
+   </target>
+ </project>
+
+
+
+Rendering changed files only
+----------------------------
+The ``uptodate`` attribute determines if only those files should
+be rendered that are newer than their output file. ::
+
+ <?xml version="1.0" encoding="utf-8"?>
+ <project name="example" basedir="." default="multiple">
+   <target name="multiple" description="renders several rST files">
+
+     <rST uptodate="true">
+      <fileset dir=".">
+        <include name="docs/\*.rst" />
+      </fileset>
      </rST>
 
    </target>

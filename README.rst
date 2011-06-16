@@ -4,6 +4,7 @@ Phing rST task
 
 Renders rST (reStructuredText) files into different output formats
 
+.. contents::
 
 Features
 ========
@@ -63,3 +64,132 @@ Dependencies
 
   They contain `rst2html`, `rst2latex`, `rst2man`, `rst2odt`, `rst2s5`,
   `rst2xml`.
+
+
+
+Examples
+========
+
+Render a single rST file to HTML
+--------------------------------
+By default, HTML is generated. If no target file is specified,
+the input file name is taken, and its extension replaced with
+the correct one for the output format. ::
+
+ <?xml version="1.0" encoding="utf-8"?>
+ <project name="example" basedir="." default="single">
+   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
+
+   <target name="single" description="render a single rST file to HTML">
+     <rST file="path/to/file.rst" />
+   </target>
+ </project>
+
+
+Render a single rST file to any supported format
+------------------------------------------------
+The ``format`` attribute determines the output format: ::
+
+ <?xml version="1.0" encoding="utf-8"?>
+ <project name="example" basedir="." default="single">
+   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
+
+   <target name="single" description="render a single rST file to S5 HTML">
+     <rST file="path/to/file.rst" format="s5" />
+   </target>
+ </project>
+
+
+Specifying the output file name
+-------------------------------
+::
+
+ <?xml version="1.0" encoding="utf-8"?>
+ <project name="example" basedir="." default="single">
+   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
+
+   <target name="single" description="render a single rST file">
+     <rST file="path/to/file.rst" targetfile="path/to/output/file.html" />
+   </target>
+ </project>
+
+
+Rendering multiple files
+------------------------
+A nested ``fileset`` tag may be used to specify multiple files. ::
+
+ <?xml version="1.0" encoding="utf-8"?>
+ <project name="example" basedir="." default="multiple">
+   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
+
+   <target name="multiple" description="renders several rST files">
+     <rST>
+      <fileset dir=".">
+        <include name="README.rst" />
+        <include name="docs/\*.rst" />
+      </fileset>
+     </rST>
+   </target>
+ </project>
+
+
+Rendering multiple files to another directory
+---------------------------------------------
+A nested ``mapper`` may be used to determine the output file names. ::
+
+ <?xml version="1.0" encoding="utf-8"?>
+ <project name="example" basedir="." default="multiple">
+   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
+
+   <target name="multiple" description="renders several rST files">
+     <rST>
+      <fileset dir=".">
+        <include name="README.rst" />
+        <include name="docs/\*.rst" />
+      </fileset>
+      <mapper type="glob" from="\*.rst" to="path/to/my/\*.xhtml"/>
+     </rST>
+   </target>
+ </project>
+
+
+Modifying files after rendering
+-------------------------------
+You may have variables in your rST code that can be replaced
+after rendering, i.e. the version of your software. ::
+
+ <?xml version="1.0" encoding="utf-8"?>
+ <project name="example" basedir="." default="filterchain">
+   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
+
+   <target name="filterchain" description="renders several rST files">
+     <rST>
+      <fileset dir=".">
+        <include name="README.rst" />
+        <include name="docs/\*.rst" />
+      </fileset>
+      <filterchain>
+        <replacetokens begintoken="##" endtoken="##">
+          <token key="VERSION" value="1.23.0" />
+        </replacetokens>
+      </filterchain>
+     </rST>
+   </target>
+ </project>
+
+
+Specify a custom CSS file
+-------------------------
+You may pass any additional parameters to the rst conversion tools
+with the ``toolparam`` attribute. ::
+
+ <?xml version="1.0" encoding="utf-8"?>
+ <project name="example" basedir="." default="single">
+   <taskdef name="rST" classname="phing.tasks.ext.rSTTask" />
+
+   <target name="single" description="render a single rST file to S5 HTML">
+     <rST file="path/to/file.rst" toolparam="--stylesheet-path=custom.css" />
+   </target>
+ </project>
+
+

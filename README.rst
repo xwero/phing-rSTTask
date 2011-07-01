@@ -25,32 +25,32 @@ Features
 Attributes
 ==========
 
-============== ======== =========================== ========== ========
-Name           Type     Description                 Default    Required
-============== ======== =========================== ========== ========
-``file``       String   rST input file to render    n/a        Yes (or fileset)
-``format``     String   Output format:              ``html``   No
+=============== ======== =========================== ========== ========
+Name            Type     Description                 Default    Required
+=============== ======== =========================== ========== ========
+``file``        String   rST input file to render    n/a        Yes (or fileset)
+``format``      String   Output format:              ``html``   No
 
-                        - ``html``
-                        - ``latex``
-                        - ``man``
-                        - ``odt``
-                        - ``s5``
-                        - ``xml``
-``targetfile`` String   Path to store the rendered  magically  No
-                        file to                     determined
-                                                    from
-                                                    input file
-``uptodate``   Boolean  Only render if the input    ``false``  No
-                        file is newer than the
-                        target file
-``toolpath``   String   Path to the rst2* tool      determined No
-                                                    from
-                                                    ``format``
-``toolparam``  String   Additional commandline      n/a        No
-                        parameters to the rst2*
-                        tool
-============== ======== =========================== ========== ========
+                         - ``html``
+                         - ``latex``
+                         - ``man``
+                         - ``odt``
+                         - ``s5``
+                         - ``xml``
+``destination`` String   Path to store the rendered  magically  No
+                         file to                     determined
+                                                     from
+                                                     input file
+``uptodate``    Boolean  Only render if the input    ``false``  No
+                         file is newer than the
+                         target file
+``toolpath``    String   Path to the rst2* tool      determined No
+                                                     from
+                                                     ``format``
+``toolparam``   String   Additional commandline      n/a        No
+                         parameters to the rst2*
+                         tool
+=============== ======== =========================== ========== ========
 
 
 Supported nested tags
@@ -143,7 +143,7 @@ Specifying the output file name
  <project name="example" basedir="." default="single">
    <target name="single" description="render a single rST file">
 
-     <rST file="path/to/file.rst" targetfile="path/to/output/file.html" />
+     <rST file="path/to/file.rst" destination="path/to/output/file.html" />
 
    </target>
  </project>

@@ -106,10 +106,10 @@ class rSTTaskTest extends BuildFileTest
         );
     }
 
-    public function testSingleFileParameterFileFormatTarget()
+    public function testSingleFileParameterFileFormatDestination()
     {
         $this->executeTarget(__FUNCTION__);
-        $this->assertFileCreated('files/single-target.html');
+        $this->assertFileCreated('files/single-destination.html');
     }
 
     public function testParameterUptodate()

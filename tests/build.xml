@@ -27,10 +27,11 @@
     <rST format="foo" file="files/single.rst" />
   </target>
 
-  <target name="testSingleFileParameterFileFormatTarget"
-          description="render a single rST file, file+format+target attributes"
+  <target name="testSingleFileParameterFileFormatDestination"
+          description="render a single rST file, file+format+destination attributes"
   >
-    <rST format="html" file="files/single.rst" targetfile="files/single-target.html" />
+    <rST format="html" file="files/single.rst"
+         destination="files/single-destination.html" />
   </target>
 
 
@@ -44,9 +45,9 @@
 
 
   <target name="testDirectoryCreation"
-          description="Test if creating target directories works"
+          description="Test if creating destination directories works"
   >
-    <rST file="files/single.rst" targetfile="files/a/b/c/single.html" />
+    <rST file="files/single.rst" destination="files/a/b/c/single.html" />
   </target>
 
 

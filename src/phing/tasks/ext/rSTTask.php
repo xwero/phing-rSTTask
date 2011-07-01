@@ -90,11 +90,12 @@ class rSTTask extends Task
     protected $toolPath = null;
 
     /**
-     * Output file. May be omitted.
+     * Output file or directory. May be omitted.
+     * When it ends with a slash, it is considered to be a directory
      *
      * @var string
      */
-    protected $targetFile = null;
+    protected $destination = null;
 
     protected $filesets      = array(); // all fileset objects assigned to this task
     protected $mapperElement = null;
@@ -137,7 +138,7 @@ class rSTTask extends Task
 
         if ($this->file != '') {
             $file   = $this->file;
-            $targetFile = $this->getTargetFile($file, $this->targetFile);
+            $targetFile = $this->getTargetFile($file, $this->destination);
             $this->render($tool, $file, $targetFile);
             return;
         }
@@ -275,20 +276,22 @@ class rSTTask extends Task
 
     /**
      * Determines and returns the target file name from the
-     * input file and the configured target file name.
+     * input file and the configured destination name.
      *
-     * @param string $file       Input file
-     * @param string $targetFile Target file name, may be null
+     * @param string $file        Input file
+     * @param string $destination Destination file or directory name,
+     *                            may be null
      *
      * @return string Target file name
      *
      * @uses $format
      * @uses $targetExt
      */
-    public function getTargetFile($file, $targetFile = null)
+    public function getTargetFile($file, $destination = null)
     {
-        if ($targetFile != '') {
-            return $targetFile;
+        //FIXME: check and handle destination directory
+        if ($destination != '') {
+            return $destination;
         }
 
         if (strtolower(substr($file, -4)) == '.rst') {
@@ -340,15 +343,16 @@ class rSTTask extends Task
 
 
     /**
-     * The setter for the attribute "targetfile"
+     * The setter for the attribute "destination"
      *
-     * @param string $targetFile Output file
+     * @param string $destination Output file or directory. When it ends
+     *                            with a slash, it is taken as directory.
      *
      * @return void
      */
-    public function setTargetfile($targetFile)
+    public function setDestination($destination)
     {
-        $this->targetFile = $targetFile;
+        $this->destination = $destination;
     }
 
     /**

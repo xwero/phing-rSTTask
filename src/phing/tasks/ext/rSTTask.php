@@ -164,7 +164,16 @@ class rSTTask extends Task
             foreach ($srcFiles as $src) {
                 $file  = new PhingFile($fromDir, $src);
                 if ($mapper !== null) {
-                    $targetFile = reset($mapper->main($file));
+                    $results = $mapper->main($file);
+                    if ($results === null) {
+                        throw new BuildException(
+                            sprintf(
+                                'No filename mapper found for "%s"',
+                                $file
+                            )
+                        );
+                    }
+                    $targetFile = reset($results);
                 } else {
                     $targetFile = $this->getTargetFile($file);
                 }

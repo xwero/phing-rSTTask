@@ -183,6 +183,15 @@ class rSTTaskTest extends BuildFileTest
         $this->assertFileCreated('files/two.my.html');
     }
 
+    /**
+     * @expectedException BuildException
+     * @expectedExceptionMessage No filename mapper found for "./files/single.rst"
+     */
+    public function testNotMatchingMapper()
+    {
+        $this->executeTarget(__FUNCTION__);
+    }
+
 
     public function testFilterChain()
     {

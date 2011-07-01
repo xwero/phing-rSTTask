@@ -110,6 +110,17 @@
     </rST>
   </target>
 
+  <target name="testNotMatchingMapper"
+          description="try to render a file that does not match a mapper"
+  >
+    <rST>
+      <fileset dir=".">
+        <include name="files/single.rst" />
+      </fileset>
+      <mapper type="glob" from="*.txt" to="*.html"/>
+    </rST>
+  </target>
+
 
   <target name="testFilterChain"
           description="use a filter chain"

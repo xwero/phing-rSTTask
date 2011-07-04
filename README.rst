@@ -38,8 +38,8 @@ Name            Type     Description                 Default    Required
                          - ``s5``
                          - ``xml``
 ``destination`` String   Path to store the rendered  magically  No
-                         file to                     determined
-                                                     from
+                         file to. Used as directory  determined
+                         if it ends with a  ``/``.   from
                                                      input file
 ``uptodate``    Boolean  Only render if the input    ``false``  No
                          file is newer than the

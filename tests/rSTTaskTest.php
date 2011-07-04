@@ -112,6 +112,32 @@ class rSTTaskTest extends BuildFileTest
         $this->assertFileCreated('files/single-destination.html');
     }
 
+    public function testParameterDestinationAsDirectory()
+    {
+        $this->executeTarget(__FUNCTION__);
+        $this->assertFileCreated('files/subdir/files/single.html');
+        rmdir(dirname(__FILE__) . '/files/subdir/files');
+        rmdir(dirname(__FILE__) . '/files/subdir');
+    }
+
+    public function testParameterDestinationDirectoryWithFileset()
+    {
+        $this->executeTarget(__FUNCTION__);
+        $this->assertFileCreated('files/subdir/files/single.html');
+        $this->assertFileCreated('files/subdir/files/two.html');
+        rmdir(dirname(__FILE__) . '/files/subdir/files');
+        rmdir(dirname(__FILE__) . '/files/subdir');
+    }
+
+    public function testParameterDestinationDirectoryWithFilesetDot()
+    {
+        $this->executeTarget(__FUNCTION__);
+        $this->assertFileCreated('files/subdir/files/single.html');
+        $this->assertFileCreated('files/subdir/files/two.html');
+        rmdir(dirname(__FILE__) . '/files/subdir/files');
+        rmdir(dirname(__FILE__) . '/files/subdir');
+    }
+
     public function testParameterUptodate()
     {
         $this->executeTarget(__FUNCTION__);

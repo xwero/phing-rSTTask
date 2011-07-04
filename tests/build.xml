@@ -34,6 +34,35 @@
          destination="files/single-destination.html" />
   </target>
 
+  <target name="testParameterDestinationAsDirectory"
+          description="using a destination directory"
+  >
+    <rST format="html" file="files/single.rst"
+         destination="files/subdir/" />
+  </target>
+
+  <target name="testParameterDestinationDirectoryWithFileset"
+          description="using a destination directory and a file set"
+  >
+    <rST format="html" destination="files/subdir/">
+      <fileset dir="files">
+        <include name="single.rst" />
+        <include name="two.rst" />
+      </fileset>
+    </rST>
+  </target>
+
+  <target name="testParameterDestinationDirectoryWithFilesetDot"
+          description="using a destination directory and a file set, with a . as dir"
+  >
+    <rST format="html" destination="files/subdir/">
+      <fileset dir=".">
+        <include name="files/single.rst" />
+        <include name="files/two.rst" />
+      </fileset>
+    </rST>
+  </target>
+
 
   <target name="testParameterUptodate"
           description="Test if the uptodate attribute works"

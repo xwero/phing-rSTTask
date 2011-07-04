@@ -175,7 +175,7 @@ class rSTTask extends Task
                     }
                     $targetFile = reset($results);
                 } else {
-                    $targetFile = $this->getTargetFile($file);
+                    $targetFile = $this->getTargetFile($file, $this->destination);
                 }
                 $this->render($tool, $file, $targetFile);
             }
@@ -232,7 +232,8 @@ class rSTTask extends Task
             //target is up to date
             return;
         }
-        $targetDir = dirname($targetFile);
+        //work around a bug in php by replacing /./ with /
+        $targetDir = str_replace('/./', '/', dirname($targetFile));
         if (!is_dir($targetDir)) {
             mkdir($targetDir, $this->mode, true);
         }
@@ -298,16 +299,18 @@ class rSTTask extends Task
      */
     public function getTargetFile($file, $destination = null)
     {
-        //FIXME: check and handle destination directory
-        if ($destination != '') {
+        if ($destination != ''
+            && substr($destination, -1) !== '/'
+            && substr($destination, -1) !== '\\'
+        ) {
             return $destination;
         }
 
         if (strtolower(substr($file, -4)) == '.rst') {
-            return substr($file, 0, -3) . self::$targetExt[$this->format];
+            $file = substr($file, 0, -4);
         }
 
-        return $file . '.'  . self::$targetExt[$this->format];
+        return $destination . $file . '.'  . self::$targetExt[$this->format];
     }
 
 

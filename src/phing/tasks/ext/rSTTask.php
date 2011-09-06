@@ -96,6 +96,13 @@ class rSTTask extends Task
      * @var string
      */
     protected $destination = null;
+    
+    /**
+     * Fileset directory that ges removed from the destination file. May be omitted.
+     *
+     * @var string
+     */
+    protected $removeFilesetDir = null;
 
     protected $filesets      = array(); // all fileset objects assigned to this task
     protected $mapperElement = null;
@@ -309,6 +316,10 @@ class rSTTask extends Task
         if (strtolower(substr($file, -4)) == '.rst') {
             $file = substr($file, 0, -4);
         }
+        
+        if($this->removeFilesetDir){
+            $file = str_replace($this->removeFilesetDir.DIRECTORY_SEPARATOR,'',$file);
+        }
 
         return $destination . $file . '.'  . self::$targetExt[$this->format];
     }
@@ -365,6 +376,19 @@ class rSTTask extends Task
     public function setDestination($destination)
     {
         $this->destination = $destination;
+    }
+    
+    /**
+     * The setter for the attribute "removefilesetdir"
+     *
+     * @param string $removeFilesetDir directory to be removed from the
+     *                                  target files      
+     *
+     * @return void
+     */
+    public function setRemoveFilesetDir($removeFilesetDir)
+    {
+        $this->removeFilesetDir = $removeFilesetDir;
     }
 
     /**
